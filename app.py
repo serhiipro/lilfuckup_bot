@@ -1,17 +1,24 @@
-from aiogram import executor
-
+from aiogram import executor, types
 from loader import dp
 import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
-from utils.set_bot_commands import set_default_commands
+from utils.set_bot_commands import set_default_commands, clear_all_commands
+
+
+@dp.message_handler()
+async def get_message(message: types.Message):
+    chat_id = message.chat.id
+
+    await dp.bot.get_updates()
 
 
 async def on_startup(dispatcher):
-    # Устанавливаем дефолтные команды
-    await set_default_commands(dispatcher)
+    import filters
+    filters.setup(dp)
 
-    # Уведомляет про запуск
-    await on_startup_notify(dispatcher)
+    await on_startup_notify(dp)
+    await clear_all_commands(dp)
+    await set_default_commands(dp)
 
 
 if __name__ == '__main__':
