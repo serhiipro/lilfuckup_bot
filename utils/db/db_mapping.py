@@ -6,20 +6,23 @@ from utils.db.db_config import engine
 Base = declarative_base(cls=DeferredReflection)
 
 
-class User(Base):
-    __tablename__ = 'users'
+class MemesBase(Base):
+    __tablename__ = 'memesbase'
     id = Column(Integer, primary_key=True)
 
-    name = Column(String)
-    address = Column(String)
-    email = Column(String)
+    file_id = Column(String)
+    file_unique_id = Column(String)
+    associated_text = Column(String)
 
     def to_dict(self):
         return {
-            'name': self.name,
-            'address': self.address,
-            'email': self.address
+            'file_id ': self.name,
+            'file_unique_id ': self.address,
+            'associated_text': self.associated_text
         }
 
 
 Base.prepare(engine)
+
+# if __name__ == '__main__':
+#     Base.metadata.create_all(engine)

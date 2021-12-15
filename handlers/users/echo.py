@@ -4,12 +4,20 @@ import random
 import requests
 from aiogram import types, bot
 from aiogram.dispatcher.filters import Text
+from utils.db.db_functions import add_image_info
 
 from keyboards.currency_keyboard import start_markup
 from keyboards.admin_keyboard import main_admin_markup
 from loader import dp, bot
 from filters.general import IsAdmin
 from aiogram.types import ReplyKeyboardRemove
+
+
+@dp.message_handler(content_types=types.ContentTypes.PHOTO)
+async def get_pic_info(message: types.Message):
+    await message.photo[-1].download(destination_dir='D:\\lilfuckup_bot\\photos')
+    # add_image_info(message.photo[-1])
+    await message.answer('Pic')
 
 
 @dp.message_handler(IsAdmin(), commands='admin')

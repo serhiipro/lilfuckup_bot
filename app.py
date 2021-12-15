@@ -8,7 +8,6 @@ from utils.set_bot_commands import set_default_commands, clear_all_commands
 @dp.message_handler()
 async def get_message(message: types.Message):
     chat_id = message.chat.id
-
     await dp.bot.get_updates()
 
 
